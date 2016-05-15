@@ -1,0 +1,13 @@
+body {
+    background-color: #f2f2f2;
+}
+
+.jumbotron {
+    background-color: cadetblue;
+    color: ghostwhite;
+}
+
+footer {
+  background-color: #99ccff;
+  padding: 25px;
+}

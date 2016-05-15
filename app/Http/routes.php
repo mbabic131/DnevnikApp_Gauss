@@ -17,4 +17,11 @@ Route::get('/', function () {
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'CrudController@index');
+Route::get('/archives', 'CrudController@show');
+Route::get('/edit/{id}', 'CrudController@edit');
+Route::get('/details/{id}', 'CrudController@details');
+
+Route::post('store', 'CrudController@store');
+Route::patch('update/{id}', 'CrudController@update');
+Route::get('delete/{id}', 'CrudController@delete');
