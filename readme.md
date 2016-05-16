@@ -1,3 +1,24 @@
+Aplikacija omogućuje prijavu i registraciju u sustav. Nakon prijave moguće je dodavati pojedine zapise u dnevnik.
+Svaki pojedini zapis moguće je izmjeniti i obrisati. Moguće je pogledati sve dosadašnje zapise. Svaki zapis sadrži 
+naslov, sliku, datum i tekst.
+
+Korištene tehnologije za izradu aplikacije:
+
+Frontend:
+-HTML
+-CSS
+-Bootstrap
+-Blade
+
+Backend:
+-PHP
+-Laravel
+
+Database:
+-MySQL
+-Eloquent
+
+
 # Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
