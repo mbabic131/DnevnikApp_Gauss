@@ -53,6 +53,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Unos</a></li>
                     <li><a href="{{ url('archives') }}">Arhiva</a></li>
+                    <li><a href="{{ url('search') }}">Pretraži</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -83,6 +84,28 @@
               <p>Aplikacija za vođenje dnevnika!</p>
         </div>
 
+        <!-- Modal for delete confirmation -->
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+          
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Upozorenje!</h4>
+              </div>
+              <div class="modal-body">
+                <p>Dali želite obrisati zapis iz dnevnika?</p>
+              </div>
+              <div class="modal-footer">
+                <a href="" style="text-decoration:none" class="modal_delete_link"><button type="button" class="btn btn-primary">Da</button></a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Ne</button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
     @yield('content')
 
     </div>
@@ -92,6 +115,22 @@
    </footer>
 
     <!-- JavaScripts -->
+    <script>
+        $(document).ready(function(){
+            $(".delete_link").on("click", function() {
+                
+                var id = $(this).attr("rel"); //get log id
+
+                var delete_url = "delete/" + id;
+                
+                $(".modal_delete_link").attr("href", delete_url); //set delete url
+                
+                $("#myModal").modal('show'); //show modal
+                
+            });
+        });
+    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}

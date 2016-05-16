@@ -27,3 +27,10 @@ Route::get('/edit/{id}', 'CrudController@edit');
 Route::post('store', 'CrudController@store');
 Route::patch('update/{id}', 'CrudController@update');
 Route::get('delete/{id}', 'CrudController@delete');
+
+//search
+Route::get('search', function() {
+	return view('search');
+});
+Route::post('search', 'CrudController@search');
+

@@ -35,46 +35,8 @@
       </div>
     </div>
  @endforeach
-
-<!-- Modal for delete confirmation -->
-<div class="modal fade" id="myModal" role="dialog">
-  <div class="modal-dialog">
-  
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Upozorenje!</h4>
-      </div>
-      <div class="modal-body">
-        <p>Dali želite obrisati zapis iz dnevnika?</p>
-      </div>
-      <div class="modal-footer">
-        <a href="" style="text-decoration:none" class="modal_delete_link"><button type="button" class="btn btn-primary">Da</button></a>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Ne</button>
-      </div>
-    </div>
-    
-  </div>
-</div>
  
 </div>
-
-<script>
-    $(document).ready(function(){
-        $(".delete_link").on("click", function() {
-            
-            var id = $(this).attr("rel"); //get log id
-
-            var delete_url = "delete/" + id;
-            
-            $(".modal_delete_link").attr("href", delete_url); //set delete url
-            
-            $("#myModal").modal('show'); //show modal
-            
-        });
-    });
-</script>
 
 <div class="row col-md-4 col-md-offset-4">
   <!-- show pagination -->

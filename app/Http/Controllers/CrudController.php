@@ -46,21 +46,44 @@ class CrudController extends Controller
     //show details about specified log
     public function details($id) {
 
-        $findRow = Log::find($id);
+        $findRow = Log::findOrFail($id);   
 
+        //only show the logs for auth user
+        if ($findRow->user_id == Auth::id()) {
+            return view('details', compact('findRow'));
+        } 
+        elseif ($findRow->user_id !== Auth::id()) {
+            return redirect('archives');
+        } 
+        elseif (count($findRow) == 0) {
+            Session::flash('flash_message', 'Zapis je obrisan!');
+            return redirect('archives');
+        } else {
+            return redirect('archives');
+        }
+
+        /*
         if(!$findRow) {
             Session::flash('flash_message', 'Zapis je obrisan!');
             return redirect('archives');
         } else {
              return view('details', compact('findRow'));
         }
+        */
     }
 
     public function edit($id) {
 
         $findRow = Log::findOrFail($id);
 
-        return view('edit', compact('findRow'));
+        if ($findRow->user_id == Auth::id()) {
+            return view('edit', compact('findRow'));
+        }
+        elseif($findRow->user_id !== Auth::id()) {
+             return redirect('archives');
+        } else {
+            return redirect('archives');
+        }
     }
 
     public function update($id, Request $request) {
@@ -147,5 +170,20 @@ class CrudController extends Controller
         Session::flash('flash_message', 'Zapis je obrisan!');
 
         return back();
+    }
+
+    public function search(Request $request) {
+
+        $searchType = $request->searchType;
+        $query = $request->find;
+
+        if($searchType == 0) {
+            $results = DB::table('logs')->where('title', $query)->where('user_id', Auth::id())->get();
+        }
+        elseif ($searchType == 1) {
+            $results = DB::table('logs')->where('text', 'LIKE', '%' . $query . '%')->where('user_id', Auth::id())->get();
+        }
+
+        return view('search', ['results' => $results]);
     }
 }
