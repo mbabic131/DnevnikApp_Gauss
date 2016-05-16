@@ -3,6 +3,15 @@
 @section('content')
 
 <h3>Uređivanje zapisa:</h3>
+
+<!-- show flash messege if user update the log -->
+@if (Session::has('flash_message'))
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{ Session::get('flash_message') }}
+    </div>
+@endif
+
 <hr>
 
 <form class="form-horizontal" role="form" method="post" action="../update/{{ $findRow->id }}" enctype="multipart/form-data">

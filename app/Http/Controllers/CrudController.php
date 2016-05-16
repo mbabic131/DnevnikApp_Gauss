@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Log;
 use Auth;
+use DB;
+use Session;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -21,7 +23,7 @@ class CrudController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show the application home page.
      *
      * @return \Illuminate\Http\Response
      */
@@ -33,7 +35,10 @@ class CrudController extends Controller
     //show all data from logs table
     public function show() {
 
-        $allLogs = Log::all();
+        //$allLogs = Log::all();
+
+        //show only the logs for auth user
+        $allLogs = DB::table('logs')->where('user_id', Auth::id())->simplePaginate(6);
 
         return view('archives', compact('allLogs'));
     }
@@ -44,6 +49,7 @@ class CrudController extends Controller
         $findRow = Log::find($id);
 
         if(!$findRow) {
+            Session::flash('flash_message', 'Zapis je obrisan!');
             return redirect('archives');
         } else {
              return view('details', compact('findRow'));
@@ -88,6 +94,8 @@ class CrudController extends Controller
 
         $findRow->save();
 
+        Session::flash('flash_message', 'Zapis je izmjenjen!');
+
         return back();
     }
 
@@ -102,13 +110,18 @@ class CrudController extends Controller
 
         $newRecord = new Log; //new Eloquent model
 
-        //upload image
-        $image = $request->picture;
-        $imageName = $request->file('picture')->getClientOriginalName();
+        $imageName = 'no_photo.jpg'; //default image
 
-        if($image->isValid()) {
-            $destinationPath = 'images'; //upload path
-            $image->move($destinationPath, $imageName);
+        if(!empty($request->picture)) {
+
+            //upload image
+            $image = $request->picture;
+            $imageName = $request->file('picture')->getClientOriginalName();
+
+            if($image->isValid()) {
+                $destinationPath = 'images'; //upload path
+                $image->move($destinationPath, $imageName); //move image to the destination folder
+            }
         }
 
         //bind values from the user input with data in Eloqunt model
@@ -119,6 +132,9 @@ class CrudController extends Controller
         $newRecord->user_id = Auth::id();
 
         $newRecord->save(); //save the record in the database
+
+        Session::flash('flash_message', 'Zapis je spremljen!');
+
         return back(); //return to the previous url
     }
 
@@ -127,6 +143,8 @@ class CrudController extends Controller
         $findRow = Log::find($id);
 
         $findRow->delete();
+
+        Session::flash('flash_message', 'Zapis je obrisan!');
 
         return back();
     }

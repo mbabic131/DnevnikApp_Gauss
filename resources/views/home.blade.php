@@ -2,6 +2,14 @@
 
 @section('content')
 
+<!-- show flash message if user save the log -->
+@if (Session::has('flash_message'))
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{ Session::get('flash_message') }}
+    </div>
+@endif
+
     <h3>Unos novog zapisa u dnevnik:</h3>
     <form class="form-horizontal" role="form" method="post" action="{{ URL('store') }}" enctype="multipart/form-data">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">

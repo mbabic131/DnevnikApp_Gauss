@@ -15,13 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::auth();
+Route::auth(); //login and regiseter route
 
+//show data
 Route::get('/home', 'CrudController@index');
 Route::get('/archives', 'CrudController@show');
-Route::get('/edit/{id}', 'CrudController@edit');
 Route::get('/details/{id}', 'CrudController@details');
+Route::get('/edit/{id}', 'CrudController@edit');
 
+//CRUD routes
 Route::post('store', 'CrudController@store');
 Route::patch('update/{id}', 'CrudController@update');
 Route::get('delete/{id}', 'CrudController@delete');
